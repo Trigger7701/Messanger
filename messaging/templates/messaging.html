@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+	<title>Messanger</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<script>
+		function getCookie(name) {
+			let cookieValue = null;
+			if (document.cookie && document.cookie !== '') {
+				const cookies = document.cookie.split(';');
+				for (let i = 0; i < cookies.length; i++) {
+					const cookie = cookies[i].trim();
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) === (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+		const csrftoken = getCookie('csrftoken');
+	</script>
+</head>
+<body>
+	<div class="row">
+		<div class="col-sm-4">
+			{% for profile in profiles %}
+			{% if profile.user != request.user %}
+			<div class="container users" id="id{{profile.user.id}}" onclick="selectuser({{profile.user.id}})">
+			  <img src="{{profile.imageURL}}" alt="Avatar" style="width:100%;">
+			  <h2>{{profile.user.username}}</h2>
+			  <p>message...</p>
+			  <span class="time-right">11:00</span>
+			</div>
+			{% endif %}
+			{% endfor %}
+		</div>	
+		<div class="col-sm-4" >
+			<div id="chat">
+
+			</div>
+			<input id="message" type="text" placeholder="write message.."><button onclick="sendmessage()">send</button>
+		</div>	
+		<div class="col-sm-4">
+			<h1>Block 3</h1>
+		</div>		
+	</div>
+	<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
