@@ -12,6 +12,9 @@ class Profiles(models.Model):
             return self.image.url
         except:
             return ''
+    @property
+    def full_name(self):
+        return self.user.first_name + ' ' + self.user.last_name
 class Chats(models.Model):
     user1 = models.ForeignKey(Profiles,related_name='sender',on_delete=models.SET_NULL,null=True)
     user2 = models.ForeignKey(Profiles,related_name='reciver',on_delete=models.SET_NULL,null=True)

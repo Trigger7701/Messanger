@@ -47,16 +47,7 @@ def sendmessage(request):
     chat = get_chat(sender,reciver)
     message = Messages.objects.create(chat=chat,sender=sender,text=data['message'])
     message.save()
-    res = {
-        'sender':{
-            'username':sender.user.username,
-            'image':sender.imageURL,
-
-        },
-        'text':message.text,
-        'time':message.mtime
-    }
-    return JsonResponse({'data':res})
+    return JsonResponse({'time':message.mtime,'status':200})
 def get_chat(s,r):
     chats = Chats.objects.filter(user1=r).filter(user2=s) | Chats.objects.filter(user2=r).filter(
         user1=s)

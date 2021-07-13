@@ -29,12 +29,18 @@
 		<div class="col-sm-4">
 			{% for profile in profiles %}
 			{% if profile.user != request.user %}
-			<div class="container users" id="id{{profile.user.id}}" onclick="selectuser({{profile.user.id}})">
+			<div class="container users" id="id{{profile.user.id}}" onclick="selectuser({{profile.user.id}},'{{profile.imageURL}}','{{profile.user.username}}','{{profile.full_name}}')">
 			  <img src="{{profile.imageURL}}" alt="Avatar" style="width:100%;">
 			  <h2>{{profile.user.username}}</h2>
 			  <p>message...</p>
 			  <span class="time-right">11:00</span>
 			</div>
+			{% else %}
+			<script>
+				myimg = "{{profile.imageURL}}"
+				myusrnm = "{{profile.user.username}}"
+				console.log(myimg,myusrnm)
+			</script>
 			{% endif %}
 			{% endfor %}
 		</div>	
@@ -45,7 +51,23 @@
 			<input id="message" type="text" placeholder="write message.."><button onclick="sendmessage()">send</button>
 		</div>	
 		<div class="col-sm-4">
-			<h1>Block 3</h1>
+
+			<h2 style="text-align:center">User Profile Card</h2>
+
+			<div class="card">
+			  <img alt="John" style="width:100%" id="pimg">
+			  <h1 id="fname">John Doe</h1>
+			  <h3 id="usrname">@username</h3>
+			  <p class="title">CEO & Founder, Example</p>
+			  <p>Harvard University</p>
+			  <div style="margin: 24px 0;">
+				<a href="#"><i class="fa fa-dribbble"></i></a>
+				<a href="#"><i class="fa fa-twitter"></i></a>
+				<a href="#"><i class="fa fa-linkedin"></i></a>
+				<a href="#"><i class="fa fa-facebook"></i></a>
+			  </div>
+			</div>
+
 		</div>		
 	</div>
 	<script type="text/javascript" src="{% static 'js/script.js' %}"></script>

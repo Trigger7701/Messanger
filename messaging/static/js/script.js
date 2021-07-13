@@ -1,6 +1,7 @@
 reciv = null
-function selectuser(reciver_id) {
+function selectuser(reciver_id,img,fn,usrn) {
     reciv = reciver_id
+    make_reciver_card(img,fn,usrn)
 	url = '/chat/'
 	fetch(url,{
     method:'POST',
@@ -26,12 +27,19 @@ function selectuser(reciver_id) {
         document.getElementById('chat').innerHTML = chatcontext
        })
     })
-
-
 }
+function make_reciver_card(img,fn,usrn){
+    document.getElementById('pimg').src = img
+    document.getElementById('fname').innerHTML = fn
+    document.getElementById('usrname').innerHTML = usrn
+}
+
 function sendmessage(){
     message = document.getElementById('message').value
     console.log(message)
+    document.getElementById('message').value = ''
+    chatcontext = "<div class='container'><img src='"+ myimg +"' alt='Avatar' style='width:100%;'><h3>"+ myusrnm +"</h3><p>"+message+"</p><span class='time-right'>yuborilmoqda...</span></div>"
+    document.getElementById('chat').innerHTML += chatcontext
     url = '/sendmessage/'
 	fetch(url,{
     method:'POST',
@@ -44,8 +52,11 @@ function sendmessage(){
     .then((response)=>{
     response.json().then((data) => {
         console.log(data)
-        chatcontext = "<div class='container'><img src='"+ data.data.sender.image +"' alt='Avatar' style='width:100%;'><h3>"+ data.data.sender.username +"</h3><p>"+data.data.text+"</p><span class='time-right'>"+data.data.time+"</span></div>"
-        document.getElementById('chat').innerHTML += chatcontext
+        t = document.getElementsByClassName("time-right")
+        t[t.length - 1].innerHTML = data.time
        })
+    }).catch(function(){
+        console.log('error')
+        t[t.length - 1].innerHTML = 'error'
     })
 }
